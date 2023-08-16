@@ -11,5 +11,7 @@ session.query(Genre).delete()
 session.query(Platform).delete()
 session.query(Game).delete()
 
+from faker import Faker
+
 session.bulk_save_objects()
 session.commit()
