@@ -1,4 +1,4 @@
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import Column, Integer, String, ForeignKey, Table
 
 
@@ -15,13 +15,15 @@ class Platform(Base):
     __tablename__ = "platforms"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)\
+    name = Column(String)
     
 class Game(Base):
     __tablename__ = "games"
 
     id = Column(Integer, primary_key=True)
     title = Column(String)
+    esrb_rating = Column(String)
+
 
 
 
