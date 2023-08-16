@@ -5,6 +5,7 @@ from models import Genre, Platform, Game, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+print('Seeding Started...')
 engine = create_engine('sqlite:///data.db')
 
 Base.metadata.create_all(engine)
@@ -27,15 +28,16 @@ esrb_rating = ['Everyone', 'Everyone 10+','Teen','Mature','Adult']
 
 
 
-for _ in range(15):
-    games = Game(
+for _ in range(5):
+    game = Game(
         title = fake.unique.name(),
         esrb_rating = random.choice(esrb_rating)
     )
-    session.add(games)
+    print(game)
+    session.add(game)
     session.commit()
    
-print('Seeding....')
+print('Seeding Complete')
 import ipdb; ipdb.set_trace()
 
 # session.bulk_save_objects()
