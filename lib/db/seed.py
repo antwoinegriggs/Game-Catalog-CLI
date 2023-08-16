@@ -14,7 +14,7 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# session.query(Genre).delete()
+session.query(Genre).delete()
 session.query(Platform).delete()
 session.query(Game).delete()
 
@@ -28,13 +28,14 @@ json_data = json.loads(response.text)
 new_data = list(range(len(json_data)))
 
 
-for _ in range(10):
+for _ in range(20):
     random_game = random.choice(new_data)
     games.append(json_data[random_game])
 
 print("....")
 
-
+platforms = set()
+genres = set()
 genre = []
 for game in games:
     print(game)
@@ -45,11 +46,21 @@ for game in games:
         
     )
 
-    add_platform = Platform(
-            name = game["platform"]
+    platform = game["platform"]
+    if platform not in platforms:
+        platforms.add(platform)
+        add_platform = Platform(
+            name = platform
+        )
+
+    genre = game["genre"]
+    if genre not in genres:
+        genres.add(genre)
+        add_genre = Genre(
+            type = genre
         )
     
-    
+    session.add(add_genre)
     session.add(add_platform)
     session.add(add_game)
     

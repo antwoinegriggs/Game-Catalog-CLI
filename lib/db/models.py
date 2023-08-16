@@ -10,6 +10,8 @@ class Genre(Base):
 
     id = Column(Integer(), primary_key=True)
     type = Column(String)
+
+    games = relationship("Game", backref="genre_game")
     
 
     def __repr__(self):
@@ -23,6 +25,8 @@ class Platform(Base):
 
     id = Column(Integer(), primary_key=True)
     name = Column(String)
+
+    games = relationship("Game", backref="platform_game")
 
     def __repr__(self):
         return f"\n<Platform " \
@@ -39,8 +43,8 @@ class Game(Base):
     genre_id = Column(Integer, ForeignKey("genres.id"))
     platform_id = Column(Integer, ForeignKey("platforms.id"))
     
-    genre = relationship("Genre")
-    platform = relationship("Platform")
+    genre = relationship("Genre", backref="game_genre")
+    platform = relationship("Platform", backref="game_genre")
 
 
     def __repr__(self):
