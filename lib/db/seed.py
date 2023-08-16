@@ -15,7 +15,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # session.query(Genre).delete()
-# session.query(Platform).delete()
+session.query(Platform).delete()
 session.query(Game).delete()
 
 games = []
@@ -33,13 +33,26 @@ for _ in range(10):
     games.append(json_data[random_game])
 
 print("....")
+
+
+genre = []
 for game in games:
     print(game)
-    game = Game(
+    add_game = Game(
         title = game["title"],
         esrb_rating = random.choice(esrb_rating)
+
+        
     )
-    session.add(game)
+
+    add_platform = Platform(
+            name = game["platform"]
+        )
+    
+    
+    session.add(add_platform)
+    session.add(add_game)
+    
     session.commit()
    
 print('Seeding Complete')

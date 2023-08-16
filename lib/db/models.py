@@ -1,5 +1,5 @@
-from sqlalchemy.orm import declarative_base, relationship
-from sqlalchemy import Column, Integer, String, ForeignKey, Date
+from sqlalchemy.orm import declarative_base, relationship, backref
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 
 
 Base = declarative_base()
@@ -10,6 +10,7 @@ class Genre(Base):
 
     id = Column(Integer(), primary_key=True)
     type = Column(String)
+    
 
     def __repr__(self):
         return f"\n<Genre " \
@@ -35,6 +36,11 @@ class Game(Base):
     id = Column(Integer(), primary_key=True)
     title = Column(String)
     esrb_rating = Column(String)
+    genre_id = Column(Integer, ForeignKey("genres.id"))
+    platform_id = Column(Integer, ForeignKey("platforms.id"))
+    
+    genre = relationship("Genre")
+    platform = relationship("Platform")
 
 
     def __repr__(self):
