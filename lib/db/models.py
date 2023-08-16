@@ -37,12 +37,11 @@ class Game(Base):
     esrb_rating = Column(String)
 
     def __repr__(self):
-        return f"\n<Genre"\
+        return f"\n<Game"\
             + f"id={self.id},"\
             + f"title={self.title}"\
             + f"esrb_rating={self.esrb_rating}"\
             +">"
-
 
 
 
