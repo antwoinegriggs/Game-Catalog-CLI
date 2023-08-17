@@ -31,7 +31,7 @@ json_data = json.loads(response.text)
 # Get length of data and assign to list for data manipulation
 data_index = list(range(len(json_data)))
 
-# 
+# Loop to manipulate and append data to games
 for _ in range(50):
     random_game = random.choice(data_index)
     games.append(json_data[random_game])
@@ -40,14 +40,16 @@ for _ in range(50):
 for game in games:
     print(game)
 
+    # Game
     add_game = Game(
         title = game["title"],
         esrb_rating = random.choice(esrb_rating))
     
-    
+    # Platform
     platform_name = game["platform"]
+
+    # Check for duplicate platforms
     existing_platform = session.query(Platform).filter_by(name=platform_name).first()
-    
     if existing_platform:
         add_game.platform = existing_platform
     else:
@@ -55,18 +57,19 @@ for game in games:
         add_game.platform = add_platform
         session.add(add_platform)
         
+    # Genre
+    genre_type = game["genre"]
 
-    genre_name = game["genre"]
-    existing_genre = session.query(Genre).filter_by(type=genre_name).first()
-    
+    # Check for duplicate genres
+    existing_genre = session.query(Genre).filter_by(type=genre_type).first()
     if existing_genre:
         add_game.genre = existing_genre
     else:
-        add_genre = Genre(type=genre_name)
+        add_genre = Genre(type=genre_type)
         add_game.genre = add_genre
         session.add(add_genre)
-    
-    print(platforms)
+
+    # Commit
     session.add(add_game)
     session.commit()
    
