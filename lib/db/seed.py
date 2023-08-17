@@ -1,19 +1,25 @@
 # from faker import Faker
 # fake = Faker()
+
 import random
 import requests
 import json
-from models import Genre, Platform, Game, Base
+
+from base import Base
+from platforms import Platform
+from genres import Genre
+from games import Game
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 print('Seeding Started...')
 engine = create_engine('sqlite:///data.db')
-
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+# Clear data
 session.query(Genre).delete()
 session.query(Platform).delete()
 session.query(Game).delete()
@@ -60,14 +66,16 @@ for game in games:
     # Genre
     genre_type = game["genre"]
 
-    # Check for duplicate genres
+    # Check for existing genre or create a new one
     existing_genre = session.query(Genre).filter_by(type=genre_type).first()
     if existing_genre:
-        add_game.genre = existing_genre
+        existing_genre.games.append(add_game)  # Add game to existing genre
     else:
-        add_genre = Genre(type=genre_type)
-        add_game.genre = add_genre
-        session.add(add_genre)
+        new_genre = Genre(type=genre_type)
+        new_genre.games.append(add_game)  # Add game to new genre
+        session.add(new_genre)
+
+
 
     # Commit
     session.add(add_game)
