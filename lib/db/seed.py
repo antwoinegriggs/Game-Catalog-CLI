@@ -1,5 +1,5 @@
-from faker import Faker
-fake = Faker()
+# from faker import Faker
+# fake = Faker()
 import random
 import requests
 import json
@@ -18,63 +18,60 @@ session.query(Genre).delete()
 session.query(Platform).delete()
 session.query(Game).delete()
 
+# Variables
 games = []
-
 esrb_rating = ['Everyone', 'Everyone 10+','Teen','Mature','Adult']
-# API request MMO Games
+platforms = set()
+genres = set()
+
+# API request from MMO Games
 response = requests.get('https://www.mmobomb.com/api1/games')
 json_data = json.loads(response.text)
 
-new_data = list(range(len(json_data)))
+# Get length of data and assign to list for data manipulation
+data_index = list(range(len(json_data)))
 
-
-for _ in range(20):
-    random_game = random.choice(new_data)
+# 
+for _ in range(50):
+    random_game = random.choice(data_index)
     games.append(json_data[random_game])
 
-print("....")
 
-platforms = set()
-genres = set()
-genre = []
 for game in games:
     print(game)
+
     add_game = Game(
         title = game["title"],
-        esrb_rating = random.choice(esrb_rating)
-
+        esrb_rating = random.choice(esrb_rating))
+    
+    
+    platform_name = game["platform"]
+    existing_platform = session.query(Platform).filter_by(name=platform_name).first()
+    
+    if existing_platform:
+        add_game.platform = existing_platform
+    else:
+        add_platform = Platform(name=platform_name)
+        add_game.platform = add_platform
+        session.add(add_platform)
         
-    )
 
-    platform = game["platform"]
-    if platform not in platforms:
-        platforms.add(platform)
-        add_platform = Platform(
-            name = platform
-        )
-
-    genre = game["genre"]
-    if genre not in genres:
-        genres.add(genre)
-        add_genre = Genre(
-            type = genre
-        )
+    genre_name = game["genre"]
+    existing_genre = session.query(Genre).filter_by(type=genre_name).first()
     
-    session.add(add_genre)
-    session.add(add_platform)
+    if existing_genre:
+        add_game.genre = existing_genre
+    else:
+        add_genre = Genre(type=genre_name)
+        add_game.genre = add_genre
+        session.add(add_genre)
+    
+    print(platforms)
     session.add(add_game)
-    
     session.commit()
    
 print('Seeding Complete')
 import ipdb; ipdb.set_trace()
 
-# session.bulk_save_objects()
 
-
-
-# print(json_data["title"])
-# print(json_data["platform"])
-# print(json_data["release_date"])
-# print(json_data["genre"])
 
