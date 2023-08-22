@@ -38,7 +38,7 @@ json_data = json.loads(response.text)
 data_index = list(range(len(json_data)))
 
 # Loop to manipulate and append data to games
-for _ in range(50):
+for _ in range(5):
     random_game = random.choice(data_index)
     games.append(json_data[random_game])
 
