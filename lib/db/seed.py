@@ -71,12 +71,10 @@ for game in games:
     # Check for existing genre or create a new one
     existing_genre = session.query(Genre).filter_by(type=genre_type).first()
     if existing_genre:
-        add_game.genre = existing_genre
-        # existing_genre.games.append(add_game)
+        add_game.genre = existing_genre 
     else:
         add_genre = Genre(type=genre_type)
         add_game.genre = add_genre
-        # new_genre.games.append(add_game)
         session.add(add_genre)
         
 
