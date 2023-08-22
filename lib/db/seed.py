@@ -1,15 +1,17 @@
 # from faker import Faker
 # fake = Faker()
-
+# Packages
 import random
 import requests
 import json
 
+# Schemas
 from base import Base
 from platforms import Platform
 from genres import Genre
 from games import Game
 
+# SQL
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -44,7 +46,7 @@ for _ in range(5):
 
 
 for game in games:
-    print(game)
+    # print(game)
 
     # Game
     add_game = Game(
@@ -69,18 +71,20 @@ for game in games:
     # Check for existing genre or create a new one
     existing_genre = session.query(Genre).filter_by(type=genre_type).first()
     if existing_genre:
-        existing_genre.games.append(add_game)  # Add game to existing genre
+        add_game.genre = existing_genre
+        # existing_genre.games.append(add_game)
     else:
-        new_genre = Genre(type=genre_type)
-        new_genre.games.append(add_game)  # Add game to new genre
-        session.add(new_genre)
-
+        add_genre = Genre(type=genre_type)
+        add_game.genre = add_genre
+        # new_genre.games.append(add_game)
+        session.add(add_genre)
+        
 
 
     # Commit
     session.add(add_game)
     session.commit()
-   
+  
 print('Seeding Complete')
 import ipdb; ipdb.set_trace()
 

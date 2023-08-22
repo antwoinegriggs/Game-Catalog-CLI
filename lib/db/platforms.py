@@ -8,7 +8,7 @@ class Platform(Base):
     id = Column(Integer(), primary_key=True)
     name = Column(String)
 
-    games = relationship("Game", backref="platform_game")
+    games_sync = relationship("Game", backref="platform_game")
 
     def __repr__(self):
         return f"\n<Platform " \

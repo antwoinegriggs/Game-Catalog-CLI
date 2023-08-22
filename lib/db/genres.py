@@ -9,7 +9,7 @@ class Genre(Base):
     id = Column(Integer(), primary_key=True)
     type = Column(String)
 
-    games = relationship("Game", secondary=game_genre_join, backref="join_genre")
+    games = relationship("Game", secondary=game_genre_join, backref="genre_game")
     
 
     def __repr__(self):

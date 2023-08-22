@@ -9,11 +9,11 @@ class Game(Base):
     id = Column(Integer(), primary_key=True)
     title = Column(String)
     esrb_rating = Column(String)
-    genre_id = Column(Integer, ForeignKey("genres.id"))
+    genre_id = Column(Integer(), ForeignKey("genres.id"))
     platform_id = Column(Integer, ForeignKey("platforms.id"))
     
     genre = relationship("Genre", backref="game_genre")
-    platform = relationship("Platform", backref="game_genre")
+    platform = relationship("Platform", backref="game_platform")
 
 
     def __repr__(self):
