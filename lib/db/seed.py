@@ -1,5 +1,3 @@
-# from faker import Faker
-# fake = Faker()
 # Packages
 import random
 import requests
@@ -10,8 +8,9 @@ from base import Base
 from platforms import Platform
 from genres import Genre
 from games import Game
+from game_platform_join import game_platform_join
 
-# SQL
+# Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -25,12 +24,11 @@ session = Session()
 session.query(Genre).delete()
 session.query(Platform).delete()
 session.query(Game).delete()
+session.query(game_platform_join).delete()
 
 # Variables
 games = []
 esrb_rating = ['Everyone', 'Everyone 10+','Teen','Mature','Adult']
-platforms = set()
-genres = set()
 
 # API request from MMO Games
 response = requests.get('https://www.mmobomb.com/api1/games')
@@ -46,8 +44,6 @@ for _ in range(5):
 
 
 for game in games:
-    # print(game)
-
     # Game
     add_game = Game(
         title = game["title"],
@@ -57,18 +53,19 @@ for game in games:
     platform_name = game["platform"]
 
     # Check for duplicate platforms
+    # Not compatiable need to be list-like
     existing_platform = session.query(Platform).filter_by(name=platform_name).first()
     if existing_platform:
-        add_game.platform = existing_platform
+        add_game.platform.append(existing_platform)
     else:
         add_platform = Platform(name=platform_name)
-        add_game.platform = add_platform
+        add_game.platform.append(add_platform)
         session.add(add_platform)
         
     # Genre
     genre_type = game["genre"]
 
-    # Check for existing genre or create a new one
+    # Check for duplicate genre
     existing_genre = session.query(Genre).filter_by(type=genre_type).first()
     if existing_genre:
         add_game.genre = existing_genre 

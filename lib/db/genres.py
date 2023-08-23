@@ -1,5 +1,5 @@
 from base import Base
-from game_genre_join import game_genre_join
+# from lib.db.game_platform_join import game_genre_join
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
@@ -9,7 +9,7 @@ class Genre(Base):
     id = Column(Integer(), primary_key=True)
     type = Column(String)
 
-    games = relationship("Game", secondary=game_genre_join, backref="genre_game")
+    # games = relationship("Game", secondary=game_genre_join, backref="genre_game")
     
 
     def __repr__(self):
