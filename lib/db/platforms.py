@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 class Platform(Base):
     __tablename__ = "platforms"
 
-    id = Column(Integer(), primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String)
 
     games = relationship("Game", backref="platform_game")

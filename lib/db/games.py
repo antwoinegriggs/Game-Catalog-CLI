@@ -13,6 +13,9 @@ class Game(Base):
     genre_id = Column(Integer, ForeignKey("genres.id"))
     platform_id = Column(Integer, ForeignKey("platforms.id"))
     
+    # type_genre = Column(String)
+    # name_platform = Column(String)
+    
     genre = relationship("Genre",  backref="game_genre")
     platform = relationship("Platform", secondary=game_platform_join, backref="game_platform")
 
