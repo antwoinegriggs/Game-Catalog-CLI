@@ -85,7 +85,7 @@ def my_games():
                     print()
                     print(f"Title: {game.title}")
                     print(f"Genre: {game.type_genre}")  
-                    print(f"Platform(s): {game.name_platform}")  
+                    print(f"Platform: {game.name_platform}")  
                     print() 
             else:
                 print("No games match the search criteria.")
