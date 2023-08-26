@@ -52,7 +52,7 @@ for platform_data in platforms_list:
 
 # Assign random games from data
 games = []
-for _ in range(1):
+for _ in range(10):
     random_game = random.choice(json_data)
     games.append(random_game)
 
@@ -70,12 +70,14 @@ for game_data in games:
     existing_platform = session.query(Platform).filter_by(name=platform_name).first()
     if existing_platform:
         add_game.platform_id = existing_platform.id
+        add_game.platform.append(existing_platform)
     else:
         new_platform = Platform(name=platform_name)
         session.add(new_platform)
         session.commit()
         add_game.platform_id = new_platform.id
-    
+        add_game.platform.append(new_platform)
+        
     # Check for duplicate and assign genre
     genre_type = game_data["genre"]
     existing_genre = session.query(Genre).filter_by(type=genre_type).first()

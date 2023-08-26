@@ -8,9 +8,9 @@ class Platform(Base):
     __table_args__= (PrimaryKeyConstraint("id"),)
 
     id = Column(Integer(), primary_key=True)
-    name = Column(String())
+    name = Column(String)
 
-    
+    game = relationship("Game", secondary=game_platform_join, backref="the_platform")
    
     
     def __repr__(self):
