@@ -4,15 +4,14 @@ import requests
 import json
 
 # Schemas
-from base import Base
-from game_platform_join import game_platform_join
-from games import Game
-from platforms import Platform
-from genres import Genre
+from models import Base, game_platform_join, Game, Platform, Genre
 
 # Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+
+
 
 print('Seeding Started...')
 engine = create_engine('sqlite:///data.db')
@@ -52,10 +51,10 @@ for platform_data in platforms_list:
 
 # Assign random games from data
 games = []
-for _ in range(10):
+for _ in range(20):
     random_game = random.choice(json_data)
     games.append(random_game)
-
+print(games)
 # Game
 for game_data in games:
     add_game = Game(

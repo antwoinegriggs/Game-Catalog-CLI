@@ -1,10 +1,11 @@
 import sys
-from ..db.base import Base
-from ..db.game_platform_join import game_platform_join
-from ..db.games import Game
-from ..db.genres import Genre
-from ..db.platforms import Platform
+from models import Base, game_platform_join, Game, Platform, Genre
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
 
+engine = create_engine('sqlite:///data.db')
+Session = sessionmaker(bind=engine)
+session = Session()
 
 # Main Menu
 
@@ -67,11 +68,28 @@ def my_games():
         option = int(option)
 
         if option == 1:
-             print("All Games")
-             break
+            games = session.query(Game).all()
+            for game in games:
+                print()
+                print(f"Title: {game.title}")
+                print(f"Genre: {game.type_genre}")
+                print(f"Platform: {game.name_platform}")
+                print()  
+            print("complete")   
         elif option == 2:
-            print("Search By Game")
-            break
+            search_title = input("Enter the game title: ")
+            matching_games = session.query(Game).filter(Game.title.startswith(search_title)).all()
+    
+            if matching_games:
+                for game in matching_games:
+                    print()
+                    print(f"Title: {game.title}")
+                    print(f"Genre: {game.type_genre}")  
+                    print(f"Platform(s): {game.name_platform}")  
+                    print() 
+            else:
+                print("No games match the search criteria.")
+
         elif option == 3:
             print("Search By Genre")
             break
