@@ -5,10 +5,10 @@ import json
 
 # Schemas
 from base import Base
+from game_platform_join import game_platform_join
 from games import Game
 from platforms import Platform
 from genres import Genre
-from game_platform_join import game_platform_join
 
 # Session
 from sqlalchemy import create_engine

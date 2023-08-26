@@ -7,10 +7,10 @@ class Platform(Base):
     __tablename__ = "platforms"
     __table_args__= (PrimaryKeyConstraint("id"),)
 
-    id = Column(Integer(), primary_key=True)
-    name = Column(String)
+    id = Column(Integer, primary_key=True)
+    name = Column(String())
 
-    game = relationship("Game", secondary=game_platform_join, backref="the_platform")
+    game = relationship("Game", secondary=game_platform_join)
    
     
     def __repr__(self):

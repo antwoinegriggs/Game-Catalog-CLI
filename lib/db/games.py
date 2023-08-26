@@ -12,7 +12,7 @@ class Game(Base):
     __table_args__= (PrimaryKeyConstraint("id"),)
 
     genre = relationship("Genre",  backref="the_game")
-    platform = relationship("Platform", secondary=game_platform_join, backref="the_game")
+    platform = relationship("Platform", secondary=game_platform_join)
   
     id = Column(Integer(), primary_key=True)
     title = Column(String())
