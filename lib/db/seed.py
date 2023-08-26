@@ -5,9 +5,9 @@ import json
 
 # Schemas
 from base import Base
+from games import Game
 from platforms import Platform
 from genres import Genre
-from games import Game
 from game_platform_join import game_platform_join
 
 # Session
@@ -27,65 +27,69 @@ session.query(Game).delete()
 session.query(game_platform_join).delete()
 
 # Variables
-games = []
-esrb_rating = ['Everyone', 'Everyone 10+','Teen','Mature','Adult']
+esrb_rating = ['Everyone', 'Everyone 10+', 'Teen', 'Mature', 'Adult']
 
 # API request from MMO Games
 response = requests.get('https://www.mmobomb.com/api1/games')
 json_data = json.loads(response.text)
 
-# Get length of data and assign to list for data manipulation
-data_index = list(range(len(json_data)))
+# Extract platform data from the API response
+platforms = set()
+for game in json_data:
+    platforms.add(game["platform"])
 
-# Loop to manipulate and append data to games
-for _ in range(5):
-    random_game = random.choice(data_index)
-    games.append(json_data[random_game])
+# Convert platform data to a list of dictionaries
+platforms_list = [{"name": platform} for platform in platforms]
 
-
-for game in games:
-    # Game
-    print(game)
-    add_game = Game(
-        title = game["title"],
-        esrb_rating = random.choice(esrb_rating))
-    
-        # type_genre = game["genre"],
-        # name_platform = game["platform"]
-    
-    # Platform
-    platform_name = game["platform"]
-
-    # Check for duplicate platforms
+# Load platform data into the database
+for platform_data in platforms_list:
+    platform_name = platform_data["name"]
     existing_platform = session.query(Platform).filter_by(name=platform_name).first()
-    if existing_platform:
-        add_game.platform.append(existing_platform)
-    else:
+    if not existing_platform:
         add_platform = Platform(name=platform_name)
-        add_game.platform.append(add_platform)
         session.add(add_platform)
         session.commit()
 
-    # Genre
-    genre_type = game["genre"]
+# Assign random games from data
+games = []
+for _ in range(1):
+    random_game = random.choice(json_data)
+    games.append(random_game)
 
-    # Check for duplicate genre
+# Game
+for game_data in games:
+    add_game = Game(
+        title = game_data["title"],
+        esrb_rating = random.choice(esrb_rating),
+        type_genre = game_data["genre"],
+        name_platform = game_data["platform"]
+    )
+    
+    # Check for duplicate and assign platform
+    platform_name = game_data["platform"]
+    existing_platform = session.query(Platform).filter_by(name=platform_name).first()
+    if existing_platform:
+        add_game.platform_id = existing_platform.id
+    else:
+        new_platform = Platform(name=platform_name)
+        session.add(new_platform)
+        session.commit()
+        add_game.platform_id = new_platform.id
+    
+    # Check for duplicate and assign genre
+    genre_type = game_data["genre"]
     existing_genre = session.query(Genre).filter_by(type=genre_type).first()
     if existing_genre:
-        add_game.genre = existing_genre 
+        add_game.genre = existing_genre
     else:
-        add_genre = Genre(type=genre_type)
-        add_game.genre = add_genre
-        session.add(add_genre)
+        new_genre = Genre(type=genre_type)
+        session.add(new_genre)
         session.commit()
-
-
-    # Commit
+        add_game.genre = new_genre
+    
+    # Commit Game
     session.add(add_game)
     session.commit()
-  
+
 print('Seeding Complete')
 import ipdb; ipdb.set_trace()
-
-
-

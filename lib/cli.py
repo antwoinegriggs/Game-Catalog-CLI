@@ -1,4 +1,16 @@
 import sys
+from db.base import Base
+from db.games import Game
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+
+engine = create_engine('sqlite:///data.db')
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+session = Session()
+
 
 def render_main_menu():
     print("Welcome to Game Catalog")
@@ -15,18 +27,6 @@ def render_my_games():
     print("3. Search Game By Genre")
     print("4. Main Menu")
     print("5. Exit")
-    option = input("Please selct one of the following options: ")
-    
-
-def edit_games():
-    print("\nEdit Games")
-    print("1. Add A Game")
-    print("2. Edit A Game")
-    print("3. Delete A Game")
-    print("4. Main Menu")
-    print("5. Exit")
-    
-    option = input("Please selct one of the following options: ")
 
 def main_menu():
     while True:
@@ -40,20 +40,16 @@ def main_menu():
         option = int(option)
 
         if option == 1:
-            render_my_games()
+            my_games()
         elif option == 2:
-            print("Search By Game")
+            edit_games()
         elif option == 3:
-            print("Search By Genre")
-        elif option == 4:
-            render_main_menu()
-        elif option == 5:
             print("Goodbye...")
             sys.exit()
+
         else:
             print("Invalid Input. Please enter a valid input.")
-            render_main_menu()
-
+          
 def my_games():
     while True:
         render_my_games()
@@ -63,18 +59,38 @@ def my_games():
             print("Invalid Input. Please enter a valid input.")
             continue
     
-            option = int(option)
+        option = int(option)
 
         if option == 1:
-            render_my_games()
+            games = session.query(Game).all()
+            for game in games:
+                print(game)
+            print()
         elif option == 2:
-            edit_games()
+            print("Search By Game")
         elif option == 3:
+            print("Search By Genre")
+        elif option == 4:
+            return
+        elif option == 5:
             print("Goodbye...")
             sys.exit()
         else:
             print("Invalid Input. Please enter a valid input.")
-            render_main_menu()
+        
+
+def edit_games():
+    print("\nEdit Games")
+    print("1. Add A Game")
+    print("2. Edit A Game")
+    print("3. Delete A Game")
+    print("4. Main Menu")
+    print("5. Exit")
+    
+    option = input("Please selct one of the following options: ")
+
+
+
 
 if __name__ == "__main__":
     main_menu()
