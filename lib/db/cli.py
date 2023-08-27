@@ -90,7 +90,8 @@ def my_games():
             platform_search()
             break
         elif option == 4:
-            return
+            main_menu()
+            break
         elif option == 5:
             print("Goodbye...")
             sys.exit()
@@ -132,7 +133,8 @@ def edit_games():
             delete_game()
             break
         elif option == 4:
-            return
+            main_menu()
+            break
         elif option == 5:
             print("Goodbye...")
             sys.exit()
@@ -185,11 +187,14 @@ def platform_search():
             if matching_games:
                 for game in matching_games:
                     print_game_info(game)
+                    continue
+                    
             
         else:
             print("Invalid Input. Please enter a valid input.")
+            continue
 
-# Add Game
+# Init Add_Game
 def add_game():
     # Game Title
     title = input("Enter the title of the game: ")
@@ -204,31 +209,42 @@ def add_game():
         session.commit()
 
     # Select a platform by ID
-    print("Select a platform")
-    platforms = session.query(Platform).all()
-    for platform in platforms:
-        print(f"{platform.id}. {platform.name}")
+    selected_platform = None
 
-    platform_id = int(input("Enter the ID of the platform: "))
-    selected_platform = session.query(Platform).get(platform_id)
+    while True:
+        print("Select a platform")
+        platforms = session.query(Platform).all()
+        for platform in platforms:
+            print(f"{platform.id}. {platform.name}")
 
+        platform_id = int(input("Enter the ID of the platform: "))
 
-    new_game = Game(
-        title=title,
-        esrb_rating = random.choice(esrb_rating),
-        name_platform=selected_platform.name,
-        platform_id=selected_platform.id,
-        type_genre=genre_name,
-        genre_id=genre.id
+        if platform_id in (1, 2, 3):
+            selected_platform = session.query(Platform).get(platform_id)
+            break
+        else:
+            print("Invalid Input. Please enter a valid input.")
+            continue
+
+    if selected_platform:
+        new_game = Game(
+            title=title,
+            esrb_rating = random.choice(esrb_rating),
+            name_platform=selected_platform.name,
+            platform_id=selected_platform.id,
+            type_genre=genre_name,
+            genre_id=genre.id
     )
     
-    new_game.platform.append(selected_platform)
+        new_game.platform.append(selected_platform)
 
-    session.add(new_game)
-    session.commit()
+        session.add(new_game)
+        session.commit()
 
     print("Game added successfully.")
+    main_menu()
 
+# Init Delete_Game
 def delete_game():
     while True:
         search_title = input("Enter game title: ")
@@ -269,6 +285,7 @@ def delete_game():
         main_menu()
         break
 
+# Init Modify_Game
 def modify_game():
     while True:
         search_title = input("Enter game title: ")
