@@ -9,8 +9,6 @@ engine = create_engine('sqlite:///data.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-
-
 # Main Menu
 
     # Render
@@ -45,8 +43,6 @@ def main_menu():
 
         else:
             print("Invalid Input. Please enter a valid input.")
-
-
 
 # My Game
 
@@ -97,9 +93,7 @@ def my_games():
             sys.exit()
         else:
             print("Invalid Input. Please enter a valid input.")
-
-
-    
+   
 # Edit Game
 
     # Render
