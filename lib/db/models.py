@@ -16,10 +16,6 @@ game_platform_join = Table(
 class Game(Base):
     __tablename__ = "games"
 
-
-    genre = relationship("Genre",  backref="the_game")
-    platform = relationship("Platform", secondary=game_platform_join)
-  
     id = Column(Integer(), primary_key=True)
     title = Column(String())
     esrb_rating = Column(String())
@@ -28,6 +24,9 @@ class Game(Base):
     type_genre = Column(String())
     genre_id = Column(Integer(), ForeignKey("genres.id"))
 
+    genre = relationship("Genre",  backref="the_game")
+    platform = relationship("Platform", secondary=game_platform_join)
+  
 class Genre(Base):
     __tablename__ = "genres"
 
