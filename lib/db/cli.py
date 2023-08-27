@@ -129,7 +129,7 @@ def edit_games():
             print("Edit Game Function")
             break
         elif option == 3:
-            print("Delete Game Function")
+            delete_game()
             break
         elif option == 4:
             return
@@ -231,7 +231,7 @@ def add_game():
 
 def delete_game():
     while True:
-        search_title = input("Enter game title")
+        search_title = input("Enter game title: ")
     
         matching_games = session.query(Game).filter(Game.title.startswith(search_title)).all()
 
@@ -239,7 +239,7 @@ def delete_game():
             for game in matching_games:
                 print_game_info(game)
 
-            game_id_input = input("Enter game ID")
+            game_id_input = input("Enter game ID: ")
 
             if not game_id_input.isdigit():
                 print("Invalid Input. Please enter a valid input.")
@@ -254,13 +254,38 @@ def delete_game():
                     delete_game.platform.clear()
                     session.delete(delete_game)
                     session.commit()
+                    print("Delete Complete")
                 else:
                     print("Cancel")
+                    main_menu()
+                    break
             else:
                 print("Invalid Game with provided ID.")
+                main_menu()
+                break
         else:
             print("No game match the search criteria.")
+            continue
+        main_menu()
+        break
 
+def modify_game():
+    while True:
+        search_title = input("Enter game title: ")
+    
+        matching_games = session.query(Game).filter(Game.title.startswith(search_title)).all()
+
+        if matching_games:
+            for game in matching_games:
+                print_game_info(game)
+
+            game_id_input = input("Enter game ID: ")
+
+            if not game_id_input.isdigit():
+                print("Invalid Input. Please enter a valid input.")
+                continue
+
+            game_id_input = int(game_id_input)
 
 if __name__ == "__main__":
     main_menu()
