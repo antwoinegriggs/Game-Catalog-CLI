@@ -4,7 +4,9 @@ The Game Catalog CLI is a command-line interface application that allows users t
 
 The current package requirement:<br>
 sqlalchemy = "1.4.41"<br>
-python_version = "3.8"
+python_version = "3.8"<br>
+alembic<br>
+ipdb
 
 # Installation
 
