@@ -10,9 +10,6 @@ from models import Base, game_platform_join, esrb_rating, Game, Platform, Platfo
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
-
-
 print('Seeding Started...')
 engine = create_engine('sqlite:///data.db')
 Base.metadata.create_all(engine)

@@ -229,6 +229,38 @@ def add_game():
 
     print("Game added successfully.")
 
+def delete_game():
+    while True:
+        search_title = input("Enter game title")
+    
+        matching_games = session.query(Game).filter(Game.title.startswith(search_title)).all()
+
+        if matching_games:
+            for game in matching_games:
+                print_game_info(game)
+
+            game_id_input = input("Enter game ID")
+
+            if not game_id_input.isdigit():
+                print("Invalid Input. Please enter a valid input.")
+                continue
+
+            game_id_input = int(game_id_input)
+            delete_game = session.query(Game).get(game_id_input)
+
+            if delete_game:
+                confirm = input(f"Are you sure you want to delete '{delete_game.title}'? (y/n): ").lower()
+                if confirm == "y":
+                    delete_game.platform.clear()
+                    session.delete(delete_game)
+                    session.commit()
+                else:
+                    print("Cancel")
+            else:
+                print("Invalid Game with provided ID.")
+        else:
+            print("No game match the search criteria.")
+
 
 if __name__ == "__main__":
     main_menu()
