@@ -1,46 +1,54 @@
-# Phase 3 CLI Project Template
+# Phase 3 CLI Project
 
-Data Models and Schema
+Data Models and Schema - models.py
 
 Game: Game table includes the title, ESRB rating, genre, and platforms.
+
 Genre: Genre table represents game genre.
+
 Platform: Platform table represents game platform.
-Game/Platform join table: Join table represents the associates between the Game and Platform Table.
 
-## Updating Your README.md
+Game/Platform Join Table: Join table represents the associates between the Game and Platform Table.
 
-`README.md` is a Markdown file that describes your project. These files can be
-used in many different ways- you may have noticed that we use them to generate
-entire Canvas lessons- but they're most commonly used as homepages for online
-Git repositories. **When you develop something that you want other people to
-use, you need to have a README.**
+Seed - seed.py
 
-Markdown is not a language that we cover in Flatiron's Software Engineering
-curriculum, but it's not a particularly difficult language to learn (if you've
-ever left a comment on Reddit, you might already know the basics). Refer to the
-cheat sheet in this lesson's resources for a basic guide to Markdown.
+CLI - cli.py
 
-### What Goes into a README?
+main_menu() and render_main_main() - These functions will display and operate the main menu with several options:
 
-This README should serve as a template for your own- go through the important
-files in your project and describe what they do. Each file that you edit
-(you can ignore your Alembic files) should get at least a paragraph. Each
-function should get a small blurb.
+    My Games: View and search games.
 
-You should descibe your actual CLI script first, and with a good level of
-detail. The rest should be ordered by importance to the user. (Probably
-functions next, then models.)
+    Edit Games: Add, edit, or delete games.
 
-Screenshots and links to resources that you used throughout are also useful to
-users and collaborators, but a little more syntactically complicated. Only add
-these in if you're feeling comfortable with Markdown.
+    Exit: Exit the application.
 
----
+my_games() and render_my_games() - These functions will display and operate the my games menu with several options:
 
-## Conclusion
+        View All Games: Display information about all available games.
 
-A lot of work goes into a good CLI, but it all relies on concepts that you've
-practiced quite a bit by now. Hopefully this template and guide will get you
-off to a good start with your Phase 3 Project.
+        Search Game By Title: Search for games by title.
 
-Happy coding!
+        Search Game By Platform: Search for games by platform via platform_search() function.
+
+        Main Menu: Return to the main menu.
+
+        Exit: Exit the application.
+
+edit_games() and render_edit_games - These functions will display and operate the edit games menu with several options:
+
+        Add A Game: Add a new game to the catalog via add_game() fucntion.
+
+        Edit A Game: Modify information about an existing game via modify_game() function.
+
+        Delete A Game: Delete a game from the catalog via delete_game() function.
+
+        Main Menu: Return to the main menu.
+
+        Exit: Exit the application.
+
+Helpers - helpers.py
+
+print_game_info(game) - Function that takes game data as an argument and display the id, title, genre, and platform.
+
+API
+The sample data for the catalog is fetched from 'https://www.mmobomb.com/api', an external API to seed the initial database.
