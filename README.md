@@ -2,8 +2,8 @@
 
 The Game Catalog CLI is a command-line interface application that allows users to manage and interact with a catalog of video games. Users can view, edit, and search for games based on various criteria such as title, genre, and platform.
 
-The current package requirement:
-sqlalchemy = "==1.4.41"
+The current package requirement:<br>
+sqlalchemy = "1.4.41"<br>
 python_version = "3.8"
 
 # Installation
