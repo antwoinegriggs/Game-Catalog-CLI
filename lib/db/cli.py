@@ -1,4 +1,5 @@
 import sys
+import random
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from models import Base, game_platform_join, Game, Platform, Genre
@@ -128,7 +129,7 @@ def edit_games():
         option = int(option)
 
         if option == 1:
-            print("Add Game Function")
+            add_game()
             break
         elif option == 2:
             print("Edit Game Function")
@@ -191,18 +192,57 @@ def platform_search():
                     print()
                     print(f"Title: {game.title}")
                     print(f"Genre: {game.type_genre}")
-                    print(f"Platform(s): {game.name_platform}")
+                    print(f"Platform: {game.name_platform}")
                     print() 
             
         else:
             print("Invalid Input. Please enter a valid input.")
 
+# Add Game
+def add_game():
+    # Game Title
+    title = input("Enter the title of the game: ")
 
+    # Genre Type
+    genre_name = input("Enter the genre of the game: ")
+    genre = session.query(Genre).filter(Genre.type == genre_name).first()
 
+    if not genre:
+        genre = Genre(type=genre_name)
+        session.add(genre)
+        session.commit()
 
+    # Select a platform by ID
+    print("Select a platform")
+    platforms = session.query(Platform).all()
+    for platform in platforms:
+        print(f"{platform.id}. {platform.name}")
 
+    platform_id = int(input("Enter the ID of the platform: "))
+    selected_platform = session.query(Platform).get(platform_id)
 
+    # ESRB rating
+    esrb_rating = ['Everyone', 'Everyone 10+', 'Teen', 'Mature', 'Adult']
+    
+    # Add the game to the games table
+    type_genre = genre_name
 
+    new_game = Game(
+        title=title,
+        esrb_rating = random.choice(esrb_rating),
+        name_platform=selected_platform.name,
+        platform_id=selected_platform.id,
+        type_genre=type_genre,
+        genre_id=genre.id
+
+    )
+    
+    new_game.platform.append(selected_platform)
+
+    session.add(new_game)
+    session.commit()
+
+    print("Game added successfully.")
 
 if __name__ == "__main__":
     main_menu()

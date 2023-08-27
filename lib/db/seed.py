@@ -4,7 +4,7 @@ import requests
 import json
 
 # Schemas
-from models import Base, game_platform_join, Game, Platform, Platform
+from models import Base, game_platform_join, Game, Platform, Platform, Genre
 
 # Session
 from sqlalchemy import create_engine
@@ -54,7 +54,7 @@ games = []
 for _ in range(20):
     random_game = random.choice(json_data)
     games.append(random_game)
-print(games)
+
 # Game
 for game_data in games:
     add_game = Game(
@@ -79,11 +79,11 @@ for game_data in games:
         
     # Check for duplicate and assign genre
     genre_type = game_data["genre"]
-    existing_genre = session.query(Platform).filter_by(type=genre_type).first()
+    existing_genre = session.query(Genre).filter_by(type=genre_type).first()
     if existing_genre:
         add_game.genre = existing_genre
     else:
-        new_genre = Platform(type=genre_type)
+        new_genre = Genre(type=genre_type)
         session.add(new_genre)
         session.commit()
         add_game.genre = new_genre
