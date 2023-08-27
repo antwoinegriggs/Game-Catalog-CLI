@@ -14,7 +14,8 @@ Seed - seed.py
 
 # CLI - cli.py
 
-main_menu() and render_main_main() - These functions will display and operate the main menu with several options:
+<h3>main_menu() and render_main_main()</h3> 
+<h4>These functions will display and operate the main menu with several options:</h4>
 
     My Games: View and search games.
 
@@ -28,7 +29,7 @@ my_games() and render_my_games() - These functions will display and operate the 
 
         Search Game By Title: Search for games by title.
 
-        Search Game By Platform: Search for games by platform via platform_search() function.
+        Search Game By Platform: Search for games by platform - platform_search() function.
 
         Main Menu: Return to the main menu.
 
@@ -36,11 +37,11 @@ my_games() and render_my_games() - These functions will display and operate the 
 
 edit_games() and render_edit_games - These functions will display and operate the edit games menu with several options:
 
-        Add A Game: Add a new game to the catalog via add_game() fucntion.
+        Add A Game: Add a new game to the catalog - add_game() fucntion.
 
-        Edit A Game: Modify information about an existing game via modify_game() function.
+        Edit A Game: Modify information about an existing game - modify_game() function.
 
-        Delete A Game: Delete a game from the catalog via delete_game() function.
+        Delete A Game: Delete a game from the catalog - delete_game() function.
 
         Main Menu: Return to the main menu.
 
