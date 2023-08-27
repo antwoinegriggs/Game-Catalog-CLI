@@ -4,7 +4,7 @@ import requests
 import json
 
 # Schemas
-from models import Base, game_platform_join, Game, Platform, Platform, Genre
+from models import Base, game_platform_join, esrb_rating, Game, Platform, Platform, Genre
 
 # Session
 from sqlalchemy import create_engine
@@ -25,8 +25,6 @@ session.query(Platform).delete()
 session.query(Game).delete()
 session.query(game_platform_join).delete()
 
-# Variables
-esrb_rating = ['Everyone', 'Everyone 10+', 'Teen', 'Mature', 'Adult']
 
 # API request from MMO Games
 response = requests.get('https://www.mmobomb.com/api1/games')

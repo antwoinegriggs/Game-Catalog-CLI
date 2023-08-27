@@ -2,12 +2,14 @@ import sys
 import random
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from models import Base, game_platform_join, Game, Platform, Genre
-
+from models import esrb_rating, game_platform_join, Game, Platform, Genre
+from helpers import print_game_info
 
 engine = create_engine('sqlite:///data.db')
 Session = sessionmaker(bind=engine)
 session = Session()
+
+
 
 # Main Menu
 
@@ -57,7 +59,7 @@ def render_my_games():
     print("4. Main Menu")
     print("5. Exit")
 
-    # Init Game
+    # Init My_Game
 def my_games():
     while True:
         render_my_games()
@@ -72,11 +74,7 @@ def my_games():
         if option == 1:
             games = session.query(Game).all()
             for game in games:
-                print()
-                print(f"Title: {game.title}")
-                print(f"Genre: {game.type_genre}")
-                print(f"Platform: {game.name_platform}")
-                print()  
+                print_game_info(game)
             print("complete")   
         elif option == 2:
             search_title = input("Enter the game title: ")
@@ -84,11 +82,7 @@ def my_games():
     
             if match_games:
                 for game in match_games:
-                    print()
-                    print(f"Title: {game.title}")
-                    print(f"Genre: {game.type_genre}")  
-                    print(f"Platform: {game.name_platform}")  
-                    print() 
+                    print_game_info(game)
             else:
                 print("No games match the search criteria.")
 
@@ -146,6 +140,8 @@ def edit_games():
             print("Invalid Input. Please enter a valid input.")
 
 # Platfrom Search
+
+    # Render
 def render_platform_search():
     print("Select a platform option:")
     print("1. PC (Windows)")
@@ -154,6 +150,7 @@ def render_platform_search():
     print("4. Main Menu")
     print("5. Exit")
 
+    #Init Platform Search
 def platform_search():
 
     platform_mapping = {
@@ -173,8 +170,6 @@ def platform_search():
             print("Goodbye...")
             sys.exit()
 
-
-
         platform_name = platform_mapping.get(option)
         if platform_name is not None:
             platforms = [platform_name] if isinstance(platform_name, str) else platform_name
@@ -189,11 +184,7 @@ def platform_search():
 
             if matching_games:
                 for game in matching_games:
-                    print()
-                    print(f"Title: {game.title}")
-                    print(f"Genre: {game.type_genre}")
-                    print(f"Platform: {game.name_platform}")
-                    print() 
+                    print_game_info(game)
             
         else:
             print("Invalid Input. Please enter a valid input.")
@@ -221,20 +212,14 @@ def add_game():
     platform_id = int(input("Enter the ID of the platform: "))
     selected_platform = session.query(Platform).get(platform_id)
 
-    # ESRB rating
-    esrb_rating = ['Everyone', 'Everyone 10+', 'Teen', 'Mature', 'Adult']
-    
-    # Add the game to the games table
-    type_genre = genre_name
 
     new_game = Game(
         title=title,
         esrb_rating = random.choice(esrb_rating),
         name_platform=selected_platform.name,
         platform_id=selected_platform.id,
-        type_genre=type_genre,
+        type_genre=genre_name,
         genre_id=genre.id
-
     )
     
     new_game.platform.append(selected_platform)
@@ -243,6 +228,7 @@ def add_game():
     session.commit()
 
     print("Game added successfully.")
+
 
 if __name__ == "__main__":
     main_menu()

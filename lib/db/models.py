@@ -4,6 +4,8 @@ from sqlalchemy import MetaData, Column, Integer, String, Table, ForeignKey
 
 Base = declarative_base(metadata=MetaData())
 
+# Variables
+esrb_rating = ['Everyone', 'Everyone 10+', 'Teen', 'Mature', 'Adult']
 
 game_platform_join = Table(
     "game_platforms",

@@ -9,3 +9,5 @@ Even and declare the path for each individual Models errors still occured.
 Reverting back to a single model file resolved error
 
 3. Module issue with cli.py not importing models if in different directory
+
+4. Can't import Variables from Seed to CLI. Executing CLI with imports will execute seed instead.
