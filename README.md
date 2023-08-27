@@ -87,6 +87,11 @@ The seed.py file sets up the database with example game data, like titles, genre
 <h3>print_game_info(game)</h3> 
 <h4>Function that takes game data as an argument and display the id, title, genre, and platform.</h4>
 
-# API
+# Contribution
 
+<h3>MMOBomb API</h3>
 The sample data for the catalog is fetched from 'https://www.mmobomb.com/api', an external API to seed the initial database.
+
+# License
+
+MIT
