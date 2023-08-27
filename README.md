@@ -41,6 +41,8 @@ python_version = "3.8"
 
 # Seed - seed.py
 
+The seed.py file sets up the database with example game data, like titles, genres, and platforms, gathered from an external external API.
+
 # CLI - cli.py
 
 <h3>main_menu() and render_main_main()</h3> 
