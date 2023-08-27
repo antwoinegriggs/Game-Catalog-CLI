@@ -300,16 +300,23 @@ def modify_game():
                         new_genre = Genre(type = new_genre_type)
                         session.add(new_genre)
                         session.commit()
+                        
+                    modify_game.genre_id = new_genre.id
+                    modify_game.type_genre = new_genre_type
+               
+                
                 if new_title:
                     modify_game.title = new_title
                 
                 session.commit()
+                print("Update Complete")
             
             else:
+                print("Invalid Game with provided ID.")
                 main_menu()
                 break
         else:
-            print("test")
+            print("No game match the search criteria.")
             continue
         main_menu()
         break
