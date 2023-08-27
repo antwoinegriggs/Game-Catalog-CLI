@@ -10,7 +10,7 @@
 
     Game/Platform Join Table: Join table represents the associates between the Game and Platform Table.
 
-Seed - seed.py
+# Seed - seed.py
 
 # CLI - cli.py
 
@@ -23,7 +23,8 @@ Seed - seed.py
 
     Exit: Exit the application.
 
-my_games() and render_my_games() - These functions will display and operate the my games menu with several options:
+<h3>my_games() and render_my_games()</h3>
+<h4>These functions will display and operate the my games menu with several options:</h4>
 
         View All Games: Display information about all available games.
 
@@ -35,7 +36,8 @@ my_games() and render_my_games() - These functions will display and operate the 
 
         Exit: Exit the application.
 
-edit_games() and render_edit_games - These functions will display and operate the edit games menu with several options:
+<h3>edit_games() and render_edit_games()</h3>
+<h4>These functions will display and operate the edit games menu with several options:</h4>
 
         Add A Game: Add a new game to the catalog - add_game() fucntion.
 
@@ -49,7 +51,8 @@ edit_games() and render_edit_games - These functions will display and operate th
 
 # Helpers - helpers.py
 
-print_game_info(game) - Function that takes game data as an argument and display the id, title, genre, and platform.
+<h3>print_game_info(game)</h3> 
+<h4>Function that takes game data as an argument and display the id, title, genre, and platform.</h4>
 
 # API
 
