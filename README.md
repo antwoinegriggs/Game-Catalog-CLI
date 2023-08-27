@@ -1,18 +1,18 @@
-# Phase 3 CLI Project
+# Game Catalog CLI
 
-Data Models and Schema - models.py
+# Data Models and Schema - models.py
 
-Game: Game table includes the title, ESRB rating, genre, and platforms.
+    Game: Game table includes the title, ESRB rating, genre, and platforms.
 
-Genre: Genre table represents game genre.
+    Genre: Genre table represents game genre.
 
-Platform: Platform table represents game platform.
+    Platform: Platform table represents game platform.
 
-Game/Platform Join Table: Join table represents the associates between the Game and Platform Table.
+    Game/Platform Join Table: Join table represents the associates between the Game and Platform Table.
 
 Seed - seed.py
 
-CLI - cli.py
+# CLI - cli.py
 
 main_menu() and render_main_main() - These functions will display and operate the main menu with several options:
 
@@ -46,9 +46,10 @@ edit_games() and render_edit_games - These functions will display and operate th
 
         Exit: Exit the application.
 
-Helpers - helpers.py
+# Helpers - helpers.py
 
 print_game_info(game) - Function that takes game data as an argument and display the id, title, genre, and platform.
 
-API
+# API
+
 The sample data for the catalog is fetched from 'https://www.mmobomb.com/api', an external API to seed the initial database.
