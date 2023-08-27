@@ -126,7 +126,7 @@ def edit_games():
             add_game()
             break
         elif option == 2:
-            print("Edit Game Function")
+            modify_game()
             break
         elif option == 3:
             delete_game()
@@ -286,6 +286,34 @@ def modify_game():
                 continue
 
             game_id_input = int(game_id_input)
+            modify_game = session.query(Game).get(game_id_input)
+
+            if modify_game:
+                print(f"Modifying information for '{modify_game.title}':")
+                new_title = input("Enter new title or leave blank to not change: ")
+                new_genre_type = input("Enter new genre or leave blank to not change: ")
+
+                if new_genre_type:
+                    new_genre = session.query(Genre).filter(Genre.type == new_genre_type).first()
+
+                    if not new_genre:
+                        new_genre = Genre(type = new_genre_type)
+                        session.add(new_genre)
+                        session.commit()
+                if new_title:
+                    modify_game.title = new_title
+                
+                session.commit()
+            
+            else:
+                main_menu()
+                break
+        else:
+            print("test")
+            continue
+        main_menu()
+        break
+                
 
 if __name__ == "__main__":
     main_menu()
