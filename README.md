@@ -1,5 +1,34 @@
 # Game Catalog CLI
 
+The Game Catalog CLI is a command-line interface application that allows users to manage and interact with a catalog of video games. Users can view, edit, and search for games based on various criteria such as title, genre, and platform.
+
+The current package requirement:
+sqlalchemy = "==1.4.41"
+python_version = "3.8"
+
+# Installation
+
+    1. Clone the repository to your local machine.
+
+    2. Install the required dependencies
+        pipenv install
+
+    3. Open virtual environment
+        pipenv shell
+
+    4. Navigate to database directory
+        cd lib/db/
+
+    5. Create the database and seed it with sample data:
+        python seed.py
+            or
+        python3 seed.py
+
+    6. Run CLI
+        python cli.py
+            or
+        python3 cli.py
+
 # Data Models and Schema - models.py
 
     Game: Game table includes the title, ESRB rating, genre, and platforms.
