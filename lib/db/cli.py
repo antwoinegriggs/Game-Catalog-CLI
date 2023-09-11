@@ -1,5 +1,6 @@
 import sys
 import random
+import os
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from models import esrb_rating, game_platform_join, Game, Platform, Genre
@@ -8,6 +9,13 @@ from helpers import print_game_info
 engine = create_engine('sqlite:///data.db')
 Session = sessionmaker(bind=engine)
 session = Session()
+
+#Clear Screen
+def clear_screen():
+    if os.name == 'posix':  # Unix/Linux/MacOS
+        os.system('clear')
+    elif os.name == 'nt':  # Windows
+        os.system('cls')
 
 # Main Menu
 
@@ -32,9 +40,11 @@ def main_menu():
         option = int(option)
 
         if option == 1:
+            clear_screen()
             my_games()
             break
         elif option == 2:
+            clear_screen()
             edit_games()
             break
         elif option == 3:
@@ -68,11 +78,13 @@ def my_games():
         option = int(option)
 
         if option == 1:
+            clear_screen()
             games = session.query(Game).all()
             for game in games:
                 print_game_info(game)
             print("complete")   
         elif option == 2:
+            clear_screen()
             search_title = input("Enter the game title: ")
             match_games = session.query(Game).filter(Game.title.startswith(search_title)).all()
     
@@ -83,9 +95,11 @@ def my_games():
                 print("No games match the search criteria.")
 
         elif option == 3:
+            clear_screen()
             platform_search()
             break
         elif option == 4:
+            clear_screen()
             main_menu()
             break
         elif option == 5:
@@ -118,15 +132,19 @@ def edit_games():
         option = int(option)
 
         if option == 1:
+            clear_screen()
             add_game()
             break
         elif option == 2:
+            clear_screen()
             modify_game()
             break
         elif option == 3:
+            clear_screen()
             delete_game()
             break
         elif option == 4:
+            clear_screen()
             main_menu()
             break
         elif option == 5:
@@ -235,7 +253,9 @@ def add_game():
         session.add(new_game)
         session.commit()
 
-    print("Game added successfully.")
+    
+    clear_screen()
+    print("Game add successfully.")
     main_menu()
 
 # Init Delete_Game
@@ -276,6 +296,8 @@ def delete_game():
         else:
             print("No game match the search criteria.")
             continue
+        clear_screen()
+        print("Game delete successfully.")
         main_menu()
         break
 
@@ -329,6 +351,9 @@ def modify_game():
         else:
             print("No game match the search criteria.")
             continue
+
+        clear_screen()
+        print("Game modify successfully.")
         main_menu()
         break
                 
